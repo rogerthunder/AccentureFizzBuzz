@@ -50,17 +50,40 @@ namespace AccentureBuzzFizz.Controllers
         /// This controller method will return a list proccesed within class Fizzbuzz
         /// </summary>
         [HttpPost("custombyrange/{start_value}/{end_value}")]
-        public List<string> getAdvanced([FromBody] JsonRequest s, string start_value, string end_value)
+        public List<string> custombyrange([FromBody] CustomRequest req, int start_value, int end_value)
         {
+            IDictionary<string,int> list = new Dictionary<string, int>();
+            if (req.divisorToken != null) list= req.divisorToken;
 
-            var list = s.divisorToken.ToList();
 
-            var weatherForecast = s.end;
+            var startValue = start_value;
+            var endValue = end_value;
 
-            Fizzbuzz classic = new Fizzbuzz();
-            classic.runAdvanced();
+            Fizzbuzz customByRange = new Fizzbuzz();
+            customByRange.customByRange(list, startValue, endValue  );
 
-            return classic.fizzbuzzResolved;
+            return customByRange.fizzbuzzResolved;
+        }
+
+        /// <summary>
+        /// The CustomSet method returns the solution to FizzBuzz challenge but with a CustomSet approach
+        /// Method will return a list containing the advanced Fizz buzz algorithm with the following changes
+        /// This controller method will return a list proccesed within class Fizzbuzz
+        /// </summary>
+        [HttpPost("customSet")]
+        public List<string> customSet([FromBody] CustomRequest req, int start_value, int end_value)
+        {
+            IDictionary<string, int> list = new Dictionary<string, int>();
+            if (req.divisorToken != null) list = req.divisorToken;
+
+
+            var startValue = start_value;
+            var endValue = end_value;
+
+            Fizzbuzz customByRange = new Fizzbuzz();
+            customByRange.customByRange(list, startValue, endValue);
+
+            return customByRange.fizzbuzzResolved;
         }
 
 
