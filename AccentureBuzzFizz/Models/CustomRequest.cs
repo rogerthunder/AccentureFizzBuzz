@@ -2,7 +2,7 @@
 {
     public class CustomRequest
     {
-        public IDictionary<string, string>? divisorToken { get; set; }
+        public IDictionary<string, int>? divisorToken { get; set; }
 
     }
 }

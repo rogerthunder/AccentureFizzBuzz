@@ -62,6 +62,36 @@
         }
 
         /// <summary>
+        /// The Advanced method returns the solution to FizzBuzz challenge but with a different approach
+        /// Method will return a list containing the advanced Fizz buzz algorithm with the following changes
+        /// Its range is from -12(negative 12) through 145.
+        /// For multiples of 3, prints "Fizz"
+        /// For multiples of 7, prints "Buzz"
+        /// For multiples of 38, prints "Bazz"
+        /// Print the appropriate combination of tokens for any number that matches more than one of those rules
+        /// Example 
+        /// </summary>
+        public void customByRange(IDictionary<string,int> list, int start, int end)
+        {
+
+
+            for (var i = start; i < end; i++)
+            {
+                var lineToAdd = "";
+
+                foreach (var item in list)
+                {
+
+                    if (i % item.Value == 0) lineToAdd += item.Key;
+                    else if (lineToAdd.Equals(String.Empty)) lineToAdd += i.ToString();
+
+                    fizzbuzzResolved.Add(lineToAdd);
+                }
+            }
+
+        }
+
+        /// <summary>
         /// Method returning current list value
         /// </summary>
         /// <returns>this.fizzbuzzResolved</returns>
