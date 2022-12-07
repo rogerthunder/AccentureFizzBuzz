@@ -68,7 +68,7 @@
         {
 
 
-            for (var i = start; i < end+1; i++)
+            for (var i = start; i < end; i++)
             {
                 var lineToAdd = "";
 
@@ -137,5 +137,7 @@
         {
             return fizzbuzzResolved;
         }
+
+
     }
 }

@@ -56,19 +56,27 @@ namespace AccentureBuzzFizz.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
 
-        public List<string> Custombyrange([FromBody] CustomRequest req, int start_value, int end_value)
+        public ActionResult<List<string>> Custombyrange([FromBody] CustomRequest req, int start_value, int end_value)
         {
-            IDictionary<string,int> list = new Dictionary<string, int>();
-            if (req.divisorToken != null) list= req.divisorToken;
+            try
+            {
+                IDictionary<string, int> list = new Dictionary<string, int>();
+                if (req.divisorToken != null) list = req.divisorToken;
 
 
-            var startValue = start_value;
-            var endValue = end_value;
+                var startValue = start_value;
+                var endValue = end_value;
 
-            Fizzbuzz customByRange = new();
-            customByRange.CustomByRange(list, startValue, endValue  );
+                Fizzbuzz customByRange = new();
+                customByRange.CustomByRange(list, startValue, endValue);
 
-            return customByRange.fizzbuzzResolved;
+                return customByRange.fizzbuzzResolved;
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
+            }
         }
 
         /// <summary>
