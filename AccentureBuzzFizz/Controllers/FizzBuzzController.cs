@@ -20,10 +20,10 @@ namespace AccentureBuzzFizz.Controllers
         /// </summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public List<string> getClassic()
+        public List<string> GetClassic()
         {
-            Fizzbuzz classic = new Fizzbuzz();
-            classic.runClassic();
+            Fizzbuzz classic = new();
+            classic.RunClassic();
 
             return classic.fizzbuzzResolved;
         }
@@ -36,10 +36,12 @@ namespace AccentureBuzzFizz.Controllers
         /// </summary>
         [HttpGet]
         [Route("advanced")]
-        public List<string> getCustomRange()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+        public List<string> GetCustomRange()
         {
-            Fizzbuzz classic = new Fizzbuzz();
-            classic.runAdvanced();
+            Fizzbuzz classic = new ();
+            classic.RunAdvanced();
 
             return classic.fizzbuzzResolved;
         }
@@ -50,7 +52,11 @@ namespace AccentureBuzzFizz.Controllers
         /// This controller method will return a list proccesed within class Fizzbuzz
         /// </summary>
         [HttpPost("custombyrange/{start_value}/{end_value}")]
-        public List<string> custombyrange([FromBody] CustomRequest req, int start_value, int end_value)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+
+        public List<string> Custombyrange([FromBody] CustomRequest req, int start_value, int end_value)
         {
             IDictionary<string,int> list = new Dictionary<string, int>();
             if (req.divisorToken != null) list= req.divisorToken;
@@ -59,8 +65,8 @@ namespace AccentureBuzzFizz.Controllers
             var startValue = start_value;
             var endValue = end_value;
 
-            Fizzbuzz customByRange = new Fizzbuzz();
-            customByRange.customByRange(list, startValue, endValue  );
+            Fizzbuzz customByRange = new();
+            customByRange.CustomByRange(list, startValue, endValue  );
 
             return customByRange.fizzbuzzResolved;
         }
@@ -71,21 +77,27 @@ namespace AccentureBuzzFizz.Controllers
         /// This controller method will return a list proccesed within class Fizzbuzz
         /// </summary>
         [HttpPost("customSet")]
-        public List<string> customSet([FromBody] CustomRequest req, int start_value, int end_value)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+
+        public ActionResult<List<string>> CustomSet([FromBody] CustomSetRequest req)
         {
-            IDictionary<string, int> list = new Dictionary<string, int>();
-            if (req.divisorToken != null) list = req.divisorToken;
+            List<int> list =  new ();
+            if (req.setofIntergers is not null) list = req.setofIntergers;
 
 
-            var startValue = start_value;
-            var endValue = end_value;
-
-            Fizzbuzz customByRange = new Fizzbuzz();
-            customByRange.customByRange(list, startValue, endValue);
-
-            return customByRange.fizzbuzzResolved;
+            Fizzbuzz customByRange = new();
+            if (req.divisorToken is not null && list is not null)
+            {
+                customByRange.CustomSet(list, req.divisorToken);
+                return customByRange.fizzbuzzResolved;
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
-
 
     }
 }
